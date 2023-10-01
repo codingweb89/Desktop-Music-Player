@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="font-awesome.css">
+    <link rel="stylesheet" href="index.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Player</title>
+</head>
+<body>
+
+
+
+  <div class="container">
+    <div class="header">
+      <div class="home">
+        <i class="fa fa-home fa-2x"></i>
+        <img src="media-player.png" alt="">
+        <h2>Media Player</h2>
+      </div>
+      <!-- <div class="exit">
+        <div><i class="fa fa-window-minimize"></i></div>
+        <div><i class="fa fa-window-maximize"></i></div>
+        <div><i class="fa fa-times fa-lg"></i></div>        
+      </div> -->
+    </div>
+
+    <div class="music_bg">
+      <img src="istockphoto-531251123-612x612.jpg" alt="">
+      <div class="sub_image"><img src="istockphoto-531251123-612x612.jpg" alt=""></div>
+    </div>
+    <div class="music">
+      <audio src="Crimson Fly - Huma-Huma.mp3" controls id="song" hidden></audio>
+      <div class="audio_len"><input type="range" value="0" id="range"></div>
+      <div class="tools">
+        <div class="title">
+          <h1>Crimpson Fly</h1>
+          <span>Huma-Huma - Single</span>
+        </div>
+        <div class="controls_1">
+          <i class="fa fa-random fa-lg"></i>
+          <i class="fa fa-step-backward fa-lg"></i>
+          <span class="playbg"><i class="fa fa-play fa-lg" id="play"></i></span>        
+          <i class="fa fa-step-forward fa-lg"></i>
+          <i class="fa fa-refresh fa-lg"></i>
+        </div>
+        <div class="controls_2">
+          <i class="fa fa-volume-up fa-lg"></i>
+          <i class="fa fa-ellipsis-h fa-lg"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+
+<script>
+
+const song = document.getElementById("song");
+const play = document.getElementById("play");
+const range = document.getElementById("range");
+
+song.addEventListener("loadedmetadata", e => {
+  console.log(e)
+  range.max = song.duration;
+  range.value = song.currentTime;
+  let duration = song.duration;
+})
+
+
+function playPause() {
+  if(play.classList.contains("fa-pause")) {
+    song.pause();
+    play.classList.remove("fa-pause");
+    play.classList.add("fa-play");
+  }else {
+    song.play();
+    play.classList.add("fa-pause");
+    play.classList.remove("fa-play");
+  }
+}
+
+play.addEventListener("click", playPause);
+
+if(song.play()) {
+  setInterval(() => {
+    range.value = song.currentTime;
+    if(song.currentTime === song.duration) {
+      play.classList.remove("fa-pause");
+      play.classList.add("fa-play");
+    }
+  }, 500)
+}
+
+range.addEventListener("change", e => {
+  song.currentTime = range.value;
+  song.play();
+  play.classList.add("fa-pause");
+  play.classList.remove("fa-play");
+})
+
+
+
+</script>
+
+
+</body>
+</html>
